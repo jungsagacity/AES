@@ -132,10 +132,10 @@ CRijndael::~CRijndael()
 
 	//comment by wujun 2013.4.26  ocurr the error " _CrtIsValidHeapPointer(pUserData)" mainly by memmory allocation and realse
 	//SetFileName function has already realsed the memory which SourceFileName and TargetFileName point to.
-	//if(SourceFileName!=NULL)//释放存放文件路径的内存
-	//	delete SourceFileName;
-	//if(TargetFileName!=NULL)//释放存放文件路径的内存  --modified by wujun 2013.4.26 --original :[if(SourceFileName!=NULL)]
-	//	delete TargetFileName;
+	if(SourceFileName!=NULL)//释放存放文件路径的内存
+		delete []SourceFileName;
+	if(TargetFileName!=NULL)//释放存放文件路径的内存  --modified by wujun 2013.4.26 --original :[if(SourceFileName!=NULL)]
+		delete []TargetFileName;
 }
 
 
@@ -275,8 +275,10 @@ bool CRijndael::SetFileName(CString SFileName,CString TFileName)//设置加密与解密
 			Target.Close();
 		return false;		
 	}
-	DELETE []SourceFileName;//释放内雌
-	DELETE []TargetFileName;//释放内雌
+	delete []SourceFileName;//释放内存
+	SourceFileName = NULL;
+	delete []TargetFileName;//释放内存
+	TargetFileName=NULL;
 	return true;
 }
 
